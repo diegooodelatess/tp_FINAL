@@ -1,22 +1,18 @@
 <?php
 require_once "config.php";
 
-// ---- Paramètres de tri ----
 $colonnesAutorisees = ["name", "neighbourhood_group_cleansed", "price", "host_name", "review_scores_value"];
 $ordresAutorises = ["ASC", "DESC"];
 
 $tri = isset($_GET["tri"]) && in_array($_GET["tri"], $colonnesAutorisees) ? $_GET["tri"] : "name";
 $ordre = isset($_GET["ordre"]) && in_array($_GET["ordre"], $ordresAutorises) ? $_GET["ordre"] : "ASC";
 
-// ---- Recherche ----
 $recherche = isset($_GET["recherche"]) ? trim($_GET["recherche"]) : "";
 
-// ---- Pagination ----
 $limiteParPage = 8;
 $pageCourante = isset($_GET["page"]) ? max(1, intval($_GET["page"])) : 1;
 $decalage = ($pageCourante - 1) * $limiteParPage;
 
-// ---- Requête SQL ----
 $where = "";
 $params = [];
 if ($recherche !== "") {
@@ -34,7 +30,6 @@ if ($recherche !== "") {
 $stmt->execute();
 $listeLogements = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// ---- Total logements ----
 $sqlCount = "SELECT COUNT(*) FROM listings $where";
 $stmtCount = $dbh->prepare($sqlCount);
 if ($recherche !== "") {
@@ -44,7 +39,6 @@ $stmtCount->execute();
 $totalLogements = $stmtCount->fetchColumn();
 $nombrePages = ceil($totalLogements / $limiteParPage);
 
-// ---- Fonction carte logement ----
 function afficherCarteLogement($logement) {
     $nom = htmlspecialchars($logement['name'] ?? 'Logement sans nom');
     $ville = htmlspecialchars($logement['neighbourhood_group_cleansed'] ?? 'Ville inconnue');
@@ -84,7 +78,6 @@ function afficherCarteLogement($logement) {
 
 <a href="ajouter.php" class="btn-add"> Ajouter une annonce</a>
 
-<!-- Formulaire de recherche -->
 <form method="GET" id="form-recherche" style="margin-bottom:20px;">
     <input type="text" name="recherche" placeholder="Rechercher nom, ville ou propriétaire..." value="<?= htmlspecialchars($recherche) ?>" style="width:300px; padding:5px;">
     <button type="submit" class="btn-add" style="padding:6px 12px;">Rechercher</button>
@@ -92,7 +85,6 @@ function afficherCarteLogement($logement) {
     <input type="hidden" name="ordre" value="<?= $ordre ?>">
 </form>
 
-<!-- Formulaire de tri -->
 <form method="GET" id="form-tri">
     <label>Trier par :</label>
     <select name="tri" onchange="document.getElementById('form-tri').submit()">
@@ -123,7 +115,6 @@ function afficherCarteLogement($logement) {
     <?php endif; ?>
 </div>
 
-<!-- Pagination -->
 <div class="pagination">
     <?php if ($pageCourante > 1): ?>
         <a href="?page=<?= $pageCourante - 1 ?>&tri=<?= $tri ?>&ordre=<?= $ordre ?>&recherche=<?= urlencode($recherche) ?>"><- Précédent</a>
