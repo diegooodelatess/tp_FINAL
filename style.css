@@ -1,108 +1,125 @@
+/* Styles généraux */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f8f8f8;
-    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
     padding: 20px;
-    color: #333;
 }
 
 h1 {
-    text-align: center;
-    margin-bottom: 30px;
+    color: #333;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
 }
 
-/* Formulaire tri */
-#form-tri {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 25px;
-}
-#form-tri label {
+/* Formulaires */
+form label {
+    display: block;
+    margin-top: 10px;
     font-weight: bold;
 }
-#form-tri select {
-    padding: 6px 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    transition: 0.2s;
-}
-#form-tri select:hover {
-    border-color: #ff5a5f;
-    box-shadow: 0 0 5px rgba(255,90,95,0.4);
+
+form input, form select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box; /* Pour que le padding n'augmente pas la taille totale */
 }
 
-/* Liste logements */
+/* Messages de succès et d'erreur */
+.success {
+    padding: 10px;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.error {
+    padding: 10px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+
+/* Cartes logements */
 .liste-logements {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
-    justify-items: center;
 }
+
+
 .carte-logement {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    overflow: hidden;
-    width: 100%;
-    max-width: 240px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Ajouté pour un meilleur rendu */
 }
+
+
 .image-principale {
     width: 100%;
-    height: 160px;
+    height: 200px; /* Taille fixe pour uniformiser les cartes */
+    object-fit: cover; /* Assure que l'image couvre la zone sans déformation */
+    border-radius: 10px;
+}
+
+
+.infos-logement h3 {
+    margin-bottom: 5px;
+    color: #333;
+}
+
+
+.proprietaire {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+.avatar-proprietaire {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #4CAF50; /* Ajouté */
+    border-radius: 50%;
     object-fit: cover;
 }
-.infos-logement {
-    padding: 10px 12px;
-}
-.infos-logement h3 {
-    font-size: 1em;
-    margin-bottom: 8px;
-}
-.infos-logement p {
-    font-size: 0.9em;
-    margin: 4px 0;
-}
-.avatar-proprietaire {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    vertical-align: middle;
-    margin-right: 6px;
-}
+
 
 /* Pagination */
 .pagination {
-    text-align: center;
     margin-top: 25px;
-}
-.pagination a {
-    padding: 6px 12px;
-    margin: 0 3px;
-    background: #fff;
-    border-radius: 6px;
-    text-decoration: none;
-    color: #333;
-    border: 1px solid #ccc;
-    transition: 0.2s;
-}
-.pagination a:hover,
-.pagination a.active {
-    background: #ff5a5f;
-    color: #fff;
-    font-weight: bold;
+    text-align: center;
 }
 
-/* Responsive */
-@media(max-width:700px){
-    .liste-logements {
-        grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
-        gap: 15px;
-    }
-    #form-tri {
-        gap: 10px;
-    }
+.pagination a {
+    padding: 6px 12px;
+    margin: 4px;
+    border-radius: 6px;
+    background: #ddd;
+    text-decoration: none;
+    color: #333;
+    transition: background 0.3s;
+}
+
+
+.pagination a.active {
+    background: #4CAF50;
+    color: white;
+}
+
+
+.pagination a:hover {
+    background: #bbb;
 }
